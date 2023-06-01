@@ -25,7 +25,9 @@ dependencies {
 
     testImplementation("org.testcontainers:junit-jupiter:${testcontainersVersion}")
     testImplementation("org.testcontainers:mssqlserver:${testcontainersVersion}")
+    testImplementation("org.testcontainers:postgresql:${testcontainersVersion}")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+//    testImplementation ("io.rest-assured:rest-assured:5.3.0")
 
     testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
     testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
