@@ -4,7 +4,6 @@ server:
   ssl:
     enabled: false
 
-
 spring:
   datasource:
     url: jdbc:${db-properties.jdbc-provider}://${db-properties.host}:${db-properties.port}/${db-properties.db-name}
@@ -45,9 +44,9 @@ db-properties:
   jdbc-provider: postgresql
   host: walletdb-postgresql-instance.cjlbkgvenvzw.eu-north-1.rds.amazonaws.com
   port: 5432
-  username: ば
-  password: 場
-  db-name: 所
+  username: test
+  password: test
+  db-name: test
 
 telegram-bot:
   name: 野

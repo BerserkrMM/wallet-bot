@@ -1,0 +1,3 @@
+spring.datasource.url: "test"
+spring.datasource.username: "test"
+spring.datasource.password: "test"
