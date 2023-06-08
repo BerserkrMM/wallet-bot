@@ -1,16 +1,7 @@
-BEGIN;
-drop table if exists command_state_dependency cascade;
-drop table if exists card_draft cascade;
-drop table if exists transaction_draft cascade;
-drop table if exists current_condition cascade;
-drop table if exists States cascade;
-drop table if exists Commands cascade;
-drop table if exists default_table cascade;
-drop table if exists command_state_message_history cascade;
+drop database if exists test;
+create database test;
 
--- cards and transactions creates to avoid exception "relation does not exist"
--- at first run. After we decide how our tables will be created, remove cards and transactions from here
-create table if not exists cards
+create table cards
 (
     id      bigint not null
         primary key,
@@ -18,7 +9,7 @@ create table if not exists cards
     name    varchar(255) unique
 );
 
-create table if not exists transactions
+create table transactions
 (
     id      bigint         not null
         primary key,
@@ -104,13 +95,6 @@ create table transaction_draft
     amount  numeric(19, 2)
 );
 
-create table default_table
-(
-    id      bigint         not null
-        primary key,
-    message varchar(255)
-);
-
 create table command_state_message_history
 (
     id        bigint not null
@@ -119,4 +103,58 @@ create table command_state_message_history
     timestamp timestamp default current_timestamp
 );
 
-END;
+create sequence hibernate_sequence;
+
+insert into Commands (id, name)
+values (1, '/start'),
+       (2, 'Show balance'),
+       (3, 'Create a card'),
+       (4, 'Add income/expense'),
+       (5, 'Show operation history'),
+       (6, 'Back'),
+       (7, 'Reset'),
+       (8, 'Confirm creating card'),
+       (9, 'Confirm creating operation');
+
+insert into States (id, name)
+values (1, 'NoState'),
+       (2, 'SetName'),
+       (3, 'SetBalance'),
+       (4, 'SetAmount'),
+       (5, 'SetType'),
+       (6, 'ChooseCard'),
+       (7, 'SetDateFrom'),
+       (8, 'SetDateTo'),
+       (9, 'Confirmation');
+
+insert into command_state_dependency (id, command_id, base_id, current_state_id, next_state_id, previous_state_id)
+VALUES (1 , 1, 1, 1, 1, 1),
+       (2 , 2, 1, 1, 1, 1),
+       (3 , 3, 1, 1, 2, 1),
+       (4 , 3, 1, 2, 3, 1),
+       (5 , 3, 1, 3, 1, 2),
+       (6 , 3, 1, 9, 1, 3),
+       (7 , 4, 1, 1, 6, 1),
+       (8 , 4, 1, 6, 4, 1),
+       (9 , 4, 1, 4, 5, 6),
+       (10, 4, 1, 5, 1, 4),
+       (11, 5, 1, 1, 6, 1),
+       (12, 5, 1, 6, 7, 1),
+       (13, 5, 1, 7, 8, 6),
+       (14, 5, 1, 8, 1, 7),
+       (15, 6, 1, 1, 1, 1),
+       (16, 7, 1, 1, 1, 1),
+       (17, 8, 1, 1, 1, 1);
+
+insert into current_condition (id, command_id, state_id)
+VALUES (1, 1, 1);
+
+INSERT INTO cards (id, balance, name)
+VALUES (1,100,'a'),
+       (2,200,'b'),
+       (3,300,'c');
+
+INSERT INTO transactions (id, amount, type, card_id)
+VALUES (1,100,'INCOME',1),
+       (2,200,'INCOME',2),
+       (3,300,'INCOME',3);

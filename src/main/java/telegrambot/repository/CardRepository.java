@@ -17,6 +17,9 @@ public interface CardRepository extends JpaRepository<Card, Long> {
     @Query(value = "SELECT c.id, c.name, c.balance  FROM cards c WHERE c.name = :name", nativeQuery = true)
     Optional<Card> getByName(@Param("name") String name);
 
+    //Since you use JPA you don't need to use Query annotation all the time. You may replace query above with this one
+    Optional<Card> findByName (String name);
+
     @Transactional
     @Modifying
     @Query(value = "UPDATE cards SET balance = :amount WHERE name = :name", nativeQuery = true)

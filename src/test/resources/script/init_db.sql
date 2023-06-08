@@ -1,16 +1,6 @@
-BEGIN;
-drop table if exists command_state_dependency cascade;
-drop table if exists card_draft cascade;
-drop table if exists transaction_draft cascade;
-drop table if exists current_condition cascade;
-drop table if exists States cascade;
-drop table if exists Commands cascade;
-drop table if exists default_table cascade;
-drop table if exists command_state_message_history cascade;
+create database test;
 
--- cards and transactions creates to avoid exception "relation does not exist"
--- at first run. After we decide how our tables will be created, remove cards and transactions from here
-create table if not exists cards
+create table cards
 (
     id      bigint not null
         primary key,
@@ -18,7 +8,7 @@ create table if not exists cards
     name    varchar(255) unique
 );
 
-create table if not exists transactions
+create table transactions
 (
     id      bigint         not null
         primary key,
@@ -104,13 +94,6 @@ create table transaction_draft
     amount  numeric(19, 2)
 );
 
-create table default_table
-(
-    id      bigint         not null
-        primary key,
-    message varchar(255)
-);
-
 create table command_state_message_history
 (
     id        bigint not null
@@ -119,4 +102,4 @@ create table command_state_message_history
     timestamp timestamp default current_timestamp
 );
 
-END;
+create sequence hibernate_sequence;

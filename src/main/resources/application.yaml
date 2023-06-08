@@ -4,13 +4,13 @@ server:
   ssl:
     enabled: false
 
-
 spring:
   datasource:
     url: jdbc:${db-properties.jdbc-provider}://${db-properties.host}:${db-properties.port}/${db-properties.db-name}
     username: ${db-properties.username}
     password: ${db-properties.password}
-    name: ololoika
+    driver-class-name: org.postgresql.Driver
+
   #    hikari:
   #      jdbc-url: jdbc:${db-properties.jdbc-provider}://${db-properties.host}:${db-properties.port}/${db-properties.db-name}
   #      username: ${db-properties.username}
@@ -20,9 +20,10 @@ spring:
   #      maxLifetime: 30000
   #      minimumIdle: 1
   #      maximumPoolSize: 2
+
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     open-in-view: off
     properties:
       hibernate:
@@ -45,9 +46,9 @@ db-properties:
   jdbc-provider: postgresql
   host: walletdb-postgresql-instance.cjlbkgvenvzw.eu-north-1.rds.amazonaws.com
   port: 5432
-  username: ば
-  password: 場
-  db-name: 所
+  username: test
+  password: test
+  db-name: WalletDB
 
 telegram-bot:
   name: 野
