@@ -9,7 +9,8 @@ spring:
     url: jdbc:${db-properties.jdbc-provider}://${db-properties.host}:${db-properties.port}/${db-properties.db-name}
     username: ${db-properties.username}
     password: ${db-properties.password}
-    name: ololoika
+    driver-class-name: org.postgresql.Driver
+
   #    hikari:
   #      jdbc-url: jdbc:${db-properties.jdbc-provider}://${db-properties.host}:${db-properties.port}/${db-properties.db-name}
   #      username: ${db-properties.username}
@@ -19,9 +20,10 @@ spring:
   #      maxLifetime: 30000
   #      minimumIdle: 1
   #      maximumPoolSize: 2
+
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     open-in-view: off
     properties:
       hibernate:
@@ -46,7 +48,7 @@ db-properties:
   port: 5432
   username: test
   password: test
-  db-name: test
+  db-name: WalletDB
 
 telegram-bot:
   name: 野

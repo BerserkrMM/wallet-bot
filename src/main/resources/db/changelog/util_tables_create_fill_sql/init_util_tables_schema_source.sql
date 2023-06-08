@@ -5,6 +5,7 @@ drop table if exists transaction_draft cascade;
 drop table if exists current_condition cascade;
 drop table if exists States cascade;
 drop table if exists Commands cascade;
+drop table if exists default_table cascade;
 drop table if exists command_state_message_history cascade;
 
 -- cards and transactions creates to avoid exception "relation does not exist"
@@ -103,6 +104,13 @@ create table transaction_draft
     amount  numeric(19, 2)
 );
 
+create table default_table
+(
+    id      bigint         not null
+        primary key,
+    message varchar(255)
+);
+
 create table command_state_message_history
 (
     id        bigint not null
@@ -110,9 +118,5 @@ create table command_state_message_history
     message   varchar(255),
     timestamp timestamp default current_timestamp
 );
-
-create sequence if not exists hibernate_sequence;
-
-alter sequence hibernate_sequence owner to "postgre_MaZHo";
 
 END;
