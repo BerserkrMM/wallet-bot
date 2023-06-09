@@ -1,64 +1,60 @@
 server:
-  port: 8487
+  port: 228
   locale: en
   ssl:
     enabled: false
 
+
 spring:
   datasource:
-    url: jdbc:${db-properties.jdbc-provider}://${db-properties.host}:${db-properties.port}/${db-properties.db-name}
-    username: ${db-properties.username}
-    password: ${db-properties.password}
-    driver-class-name: org.postgresql.Driver
-
-  #    hikari:
-  #      jdbc-url: jdbc:${db-properties.jdbc-provider}://${db-properties.host}:${db-properties.port}/${db-properties.db-name}
-  #      username: ${db-properties.username}
-  #      password: ${db-properties.password}
-  #      connectionTimeout: 5000
-  #      idleTimeout: 10000
-  #      maxLifetime: 30000
-  #      minimumIdle: 1
-  #      maximumPoolSize: 2
-
+    hikari:
+      jdbc-url: jdbc:${db-properties.jdbc-provider}://${db-properties.host}:${db-properties.port}/${db-properties.db-name}
+      username: ${db-properties.username}
+      password: ${db-properties.password}
+      idleTimeout: 10000
+      maxLifetime: 30000
+      minimumIdle: 0
+      maximumPoolSize: 2
+      pool-name: ololoika
+      connectionTimeout: 3000
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     open-in-view: off
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL10Dialect
         show_sql: true
+        format_sql: true
         temp:
           use_jdbc_metadata_defaults: false
-
   liquibase:
     enabled: false
     change-log: db/changelog/db.changelog-master.yaml
-  sql:
-    init:
-      mode: always
-      #Note:      !!! Scripts executing before Entity tables creation !!!
-      schema-locations: classpath:db/changelog/util_tables_create_fill_sql/init_util_tables_schema_source.sql
-      data-locations: classpath:db/changelog/util_tables_create_fill_sql/init_util_tables_data_source.sql
 
 db-properties:
   jdbc-provider: postgresql
   host: walletdb-postgresql-instance.cjlbkgvenvzw.eu-north-1.rds.amazonaws.com
   port: 5432
-  username: test
-  password: test
-  db-name: WalletDB
+  username: ば
+  password: 場
+  db-name: 所
 
 telegram-bot:
   name: 野
   token: 食
   webhookPath: ば
 
+multi-tenancy:
+  master:
+    entityManager:
+      packages: "telegrambot"
+
 logging:
   level:
+    liquibase: warn
     org.hibernate: info
-    liquibase: info
+    telegrambot.config.multitenancy.TenantManager: trace
 
 telegram-update-validation-properties:
   enabled: true
