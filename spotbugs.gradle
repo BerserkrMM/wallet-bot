@@ -1,0 +1,19 @@
+apply plugin: 'com.github.spotbugs'
+
+spotbugsMain {
+//        sourceDirs = files('src/main/java')
+//        classDirs = files('src/main/java')
+    auxClassPaths = files('src/main/java')
+
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+
+    ignoreFailures = false
+    showStackTraces = true
+    showProgress = true
+    effort = 'min' //info: https://spotbugs-gradle-plugin.netlify.app/com/github/spotbugs/snom/effort
+    reportLevel = 'low' //info: https://github.com/spotbugs/spotbugs-gradle-plugin/blob/master/src/main/groovy/com/github/spotbugs/snom/Confidence.groovy
+    reportsDir = file("$buildDir/reports/spotbugs/mainTaskReports")
+}
