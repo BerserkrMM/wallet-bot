@@ -1,3 +1,5 @@
+import com.github.spotbugs.snom.SpotBugsTask
+
 plugins {
     id 'java'
     id "org.springframework.boot" version "${springBootVersion}"
@@ -6,8 +8,17 @@ plugins {
 }
 
 apply from: "dependencies.gradle"
-apply from: this.projectDir.toString()+'/spotbugs.gradle' // added SpotBugs config file to all subprojects
-
+apply plugin: 'com.github.spotbugs'
+tasks.withType(SpotBugsTask) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+    ignoreFailures = true
+    showStackTraces = false
+    showProgress = false
+    reportLevel = 'low'
+}
 group = 'git'
 version = System.getenv('VERSION') ?: "${version}"
 sourceCompatibility = JavaVersion.VERSION_11
